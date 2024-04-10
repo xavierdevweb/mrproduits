@@ -13,8 +13,7 @@ class Kernel extends HttpKernel
      *
      * @var array<int, class-string|string>
      */
-   
+
      protected $routeMiddleware = [
-        'role' => \App\Http\Middleware\CheckRole::class,
      ];
 }
