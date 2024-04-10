@@ -16,7 +16,7 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function register(RegisterRequest $request) {
+    public function store(RegisterRequest $request) {
 
         try {
             $adminRole = Role::query()->where('name', 'admin')->firstOrFail();

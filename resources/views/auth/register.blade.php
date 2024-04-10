@@ -10,7 +10,7 @@
                     <div class="card-header">Inscription</div>
                     <div class="card-body">
                         <!-- Formulaire d'inscription -->
-                        <form method="POST" action="{{ route('register.post') }}">
+                        <form method="POST" action="{{ route('auth.register.store') }}">
                             <!-- Utilisez le nom de la route correct -->
                             @csrf
                             @if ($errors->any())

@@ -10,7 +10,7 @@
                     <div class="card-header">Login</div>
                     <div class="card-body">
                         <!-- Formulaire de connexion -->
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('auth.login.index') }}">
                             @csrf
 
                             <!-- Champ pour l'adresse e-mail -->

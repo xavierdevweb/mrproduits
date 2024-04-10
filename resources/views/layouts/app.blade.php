@@ -16,14 +16,14 @@
             <div>
                 <!-- Affiche le bouton de déconnexion uniquement si l'utilisateur est connecté -->
                 @auth
-                    <form action="{{ route('logout') }}" method="POST">
+                    <form action="{{ route('auth.login.logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-link">Déconnexion</button>
                     </form>
                 @else
                     <!-- Affiche les liens de connexion et d'inscription si l'utilisateur n'est pas connecté -->
-                    <a href="{{ route('login') }}">Connexion</a>
-                    <a href="{{ route('register') }}">Inscription</a>
+                    <a href="{{ route('auth.login.index') }}">Connexion</a>
+                    <a href="{{ route('auth.register.index') }}">Inscription</a>
                 @endauth
             </div>
         </div>

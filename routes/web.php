@@ -21,16 +21,23 @@ Route::prefix('admin')->name('admin.')->middleware('auth', 'role:admin')->group(
 
 // ==========================================================================================================================================================
 // AUTHENTIFICATION CLIENT
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+Route::controller(LoginController::class)->name('auth.login.')->prefix('auth')->group(function() {
+    Route::get('/login', 'index')->name('index');
+    Route::post('/login', 'login')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
+Route::controller(RegisterController::class)->name('auth.register.')->prefix('auth')->group(function() {
+    Route::get('/register', 'index')->name('index');
+    Route::post('/register', 'store')->name('store');
+});
+
 // ==========================================================================================================================================================
-
-// Route::get('/products', [Admin\ProductController::class, 'index'])->name('products.index');
-    // Route::get('/products/create', [Admin\ProductController::class, 'create'])->name('products.create');
-    // Route::post('/products', [Admin\ProductController::class, 'store'])->name('products.store');
-    // Route::get('/products/{product}', [Admin\ProductController::class, 'edit'])->name('products.edit');
-    // Route::put('/products/{product}', [Admin\ProductController::class, 'update'])->name('products.update');
+Route::controller(ProductController::class)->name('products.')->prefix('products')->group(function() {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{product}', 'edit')->name('edit');
+    Route::put('/{product}', 'update')->name('update');
+});
