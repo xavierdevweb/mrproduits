@@ -15,11 +15,10 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if(!$request->user() || $request->user()->role->name !== $role){
-            return redirect('/')->with('error', 'Accès non autorisé');
+        if(!$request->user() || optional($request->user()->role)->name !== $role){
+            return to_route('home')->with('error', 'Accès non autorisé');
         }
-        
-        
+
         return $next($request);
     }
 }

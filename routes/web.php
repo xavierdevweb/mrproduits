@@ -1,35 +1,32 @@
 <?php
 
-use App\Models\User;
 
-use App\Models\Role;
-use Auth\LoginController;
-use Admin\ProductController;
-use App\Http\Controllers\Admin;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use Admin\ProductController\Admin;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 // ==========================================================================================================================================================
 // ADMINISTRATION
-Route::prefix('admin')->name('admin.')->middleware('auth', )->group(function() {
-    Route::redirect('/', '/admin/products')->middleware('role:admin');
-    Route::resource('products', Admin\ProductController::class);
+Route::prefix('admin')->name('admin.')->middleware('auth', 'role:admin')->group(function() {
+    Route::redirect('/', '/admin/products');
+    Route::resource('products', ProductController::class);
 });
 
 // ==========================================================================================================================================================
 
 // ==========================================================================================================================================================
 // AUTHENTIFICATION CLIENT
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
-
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 // ==========================================================================================================================================================
 
 // Route::get('/products', [Admin\ProductController::class, 'index'])->name('products.index');
