@@ -8,8 +8,10 @@
 
     <div class="row">
         <div class="col-6 col-lg-6">
-            <form method="POST" action="{{ route('admin.products.store') }}">
+            <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                 @csrf
+
+                <input type="file" name="image">
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Nom du produit</label>

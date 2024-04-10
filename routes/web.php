@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 use App\Models\Role;
 use Auth\LoginController;
 use Admin\ProductController;
@@ -12,8 +14,8 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index']);
 // ==========================================================================================================================================================
 // ADMINISTRATION
-Route::prefix('admin')->name('admin.')->middleware('auth', 'role:admin')->group(function() {
-    Route::redirect('/', '/admin/products');
+Route::prefix('admin')->name('admin.')->middleware('auth', )->group(function() {
+    Route::redirect('/', '/admin/products')->middleware('role:admin');
     Route::resource('products', Admin\ProductController::class);
 });
 

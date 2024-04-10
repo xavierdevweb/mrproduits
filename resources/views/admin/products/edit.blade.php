@@ -8,9 +8,19 @@
 
     <div class="row">
         <div class="col-6 col-lg-6">
-            <form method="POST" action="{{ route('admin.products.update', ['product' => $product]) }}">
+            <form method="POST" action="{{ route('admin.products.update', ['product' => $product]) }}"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+
+                <!-- Affichez l'image actuelle du produit -->
+                @if ($product->image_path)
+                    <img src="{{ asset('storage/' . $product->image_path) }}" alt="Image du produit">
+                @endif
+
+                <!-- Champ de téléchargement de fichier pour l'image -->
+                <input type="file" name="image">
+
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Nom du produit</label>
