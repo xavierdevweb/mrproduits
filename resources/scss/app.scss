@@ -1,0 +1,77 @@
+// Définir les couleurs
+$primary-color: #007bff; // Couleur principale
+$secondary-color: #6c757d; // Couleur secondaire
+$white-color: #ffffff; // Blanc
+$gray-color: #f8f9fa; // Gris clair
+
+// Style des cartes
+.card {
+  border: none; // Supprimer la bordure
+  border-radius: 10px; // Bordure arrondie
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Ombre légère
+  transition: transform 0.3s ease; // Transition pour l'effet de survol
+  overflow: hidden; // Cacher le débordement
+  background-color: $white-color; // Fond blanc
+  &:hover {
+    transform: translateY(-5px); // Légère translation vers le haut au survol
+  }
+  img {
+    border-top-left-radius: 10px; // Coins arrondis pour l'image
+    border-top-right-radius: 10px; // Coins arrondis pour l'image
+    max-height: 200px; // Hauteur maximale de l'image
+    object-fit: cover; // Ajustement de l'image
+  }
+  .card-body {
+    padding: 20px; // Espacement interne
+    h5 {
+      color: $primary-color; // Couleur du titre
+      font-size: 1.25rem; // Taille du titre
+      margin-bottom: 10px; // Espacement inférieur
+    }
+    p {
+      color: $secondary-color; // Couleur du texte
+      font-size: 1rem; // Taille du texte
+      margin-bottom: 15px; // Espacement inférieur
+    }
+    .card-text:last-child {
+      margin-bottom: 0; // Supprimer l'espacement inférieur pour le dernier élément de texte
+    }
+  }
+}
+
+// Style pour la section container
+.container {
+  padding: 20px; // Espacement interne
+}
+
+// Style pour la rangée
+.row {
+  margin: 0 -15px; // Marge négative pour compenser la marge interne de la carte
+}
+
+// Style pour la colonne
+.col-md-4 {
+  padding: 0 15px; // Espacement interne pour la colonne
+}
+
+.btn {
+  margin-left: 10px;
+}
+
+.addProduct {
+  a {
+    padding: 0px 10px 0 10px;
+    align-items: center;
+    border-radius: 10px;
+    display: flex;
+    text-decoration: none;
+    color: green;
+  }
+  
+  svg {
+    width: 25px;
+    color: green;
+  }
+
+}
+

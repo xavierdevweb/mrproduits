@@ -17,6 +17,7 @@ Route::get('/', [HomeController::class, 'index']);
 Route::prefix('admin')->name('admin.')->middleware('auth', )->group(function() {
     Route::redirect('/', '/admin/products')->middleware('role:admin');
     Route::resource('products', Admin\ProductController::class);
+    Route::get('products/{id}/clone', [Admin\ProductController::class, 'clone'])->name('products.clone');
 });
 
 // ==========================================================================================================================================================
@@ -37,3 +38,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     // Route::post('/products', [Admin\ProductController::class, 'store'])->name('products.store');
     // Route::get('/products/{product}', [Admin\ProductController::class, 'edit'])->name('products.edit');
     // Route::put('/products/{product}', [Admin\ProductController::class, 'update'])->name('products.update');
+
+    Route::get('/{post}', [PostController::class, 'show'])->name('posts.show');
