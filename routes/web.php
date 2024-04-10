@@ -10,10 +10,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // ====================================== ADMINISTRATION ================================================
 Route::prefix('admin')->name('admin.')->middleware('auth', 'role:admin')->group(function() {
+    Route::redirect('/', '/admin/products');
     Route::resource('products', ProductController::class);
 });
 
 // ====================================== AUTHENTICATION ================================================
+Route::get('/login', [LoginController::class, 'index'])->name('login'); // this is to support laravel auth middleware redirection
 Route::prefix('auth')->name('auth.')->group(function() {
     Route::controller(LoginController::class)->name('login.')->group(function() {
         Route::get('/login', 'index')->name('index');

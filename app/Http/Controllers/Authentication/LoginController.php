@@ -22,12 +22,7 @@ class LoginController extends Controller
         if (!Auth::attempt($request->only('email', 'password')))
             return redirect()->back()->withErrors(['email' => 'Identifiants invalides']);
 
-        if (strtolower(Auth::user()->role->name) === 'admin')
-            return redirect()->intended('/admin/products');
-        else
-            return redirect()->intended('/');
-
-
+        return redirect()->intended(Auth::user()->isAdmin() ? '/admin/products' : '/');
     }
 
     public function logout() {

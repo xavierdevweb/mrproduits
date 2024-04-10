@@ -15,7 +15,7 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if(!$request->user() || optional($request->user()->role)->name !== $role){
+        if(!$request->user() || $request->user()->getRole() !== strtolower($role)) {
             return to_route('home')->with('error', 'Accès non autorisé');
         }
 

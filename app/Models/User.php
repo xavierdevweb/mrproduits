@@ -25,6 +25,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function getRole() : string
+    {
+        return strtolower($this->role->name);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -58,5 +63,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return strtolower($this->role->name) === 'admin';
+    }
+
+    public function register($name, $email, $password, $roleName, &$createdUser = null) : bool
+    {
+        try {
+            $role = Role::query()->where('name', strtolower($roleName))->firstOrFail();
+             if(!($user = $this->create([
+                'name'     => $name,
+                'email'    => $email,
+                'password' => Hash::make($password),
+                'role_id'  => $role->id
+            ]))) {
+               throw new \Exception("Erreur lors de la création de l'utilisateur. Veuillez réessayer.");
+            }
+
+            $createdUser = $user;
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

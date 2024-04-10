@@ -17,28 +17,12 @@ class RegisterController extends Controller
     }
 
     public function store(RegisterRequest $request) {
+        $isCreated = User::register($request->name, $request->email, $request->password, "admin", $user);
 
-        try {
-            $adminRole = Role::query()->where('name', 'admin')->firstOrFail();
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => "Erreur lors de la création de l'utilisateur. Veuillez réessayer."]);
-        }
-
-        $user = User::create([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'role_id'   => $adminRole->id
-        ]);
-
-        if(!$user)
-            return redirect()->back()->withErrors(['error' => "Erreur lors de la création de l'utilisateur. Veuillez réessayer."]);
+        if(!$isCreated) return redirect()->back()->withErrors(['error' => "Erreur lors de la création de l'utilisateur. Veuillez réessayer."]);
 
         Auth::login($user);
 
-        if(strtolower($adminRole->name) === 'admin')
-            return redirect()->route('admin.products.index');
-        else
-            return redirect('/');
+        return redirect()->route($user->isAdmin() ? 'admin.products.index' : '/');
     }
 }
