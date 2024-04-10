@@ -16,8 +16,6 @@
                         <div class="card mb-3">
                             <!-- Option pour l'image -->
                             <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}">
-
-
                             <div class="card-body">
                                 <!-- Nom du produit -->
                                 <h5 class="card-title">{{ $product->name }}</h5>

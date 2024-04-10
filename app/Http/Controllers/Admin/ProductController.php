@@ -79,5 +79,18 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Produit supprimé avec succès !');
     }
 
+    public function show(Post $product): View
+    {
+        return view('posts.show', [
+            'product' => $product
+        ]);
+    }
+
+    public function clone($id) {
+        $product = Product::findOrFail($id);
+        $clonedProduct = $product->replicate();
+        $clonedProduct->save();
+        return redirect()->route('admin.products.index')->with('success', 'Produit dupliqué avec succès !');
+    }
 
 }

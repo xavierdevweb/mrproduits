@@ -12,6 +12,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('admin')->name('admin.')->middleware('auth', 'role:admin')->group(function() {
     Route::redirect('/', '/admin/products');
     Route::resource('products', ProductController::class);
+    Route::get('products/{id}/clone', [ProductController::class, 'clone'])->name('products.clone');
 });
 
 // ====================================== AUTHENTICATION ================================================
