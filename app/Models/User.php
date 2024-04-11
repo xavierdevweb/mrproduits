@@ -7,6 +7,7 @@ use App\Models\Role;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 
 class User extends Authenticatable
@@ -70,11 +71,11 @@ class User extends Authenticatable
         return strtolower($this->role->name) === 'admin';
     }
 
-    public function register($name, $email, $password, $roleName, &$createdUser = null) : bool
+    public static function register($name, $email, $password, $roleName, &$createdUser = null) : bool
     {
         try {
             $role = Role::query()->where('name', strtolower($roleName))->firstOrFail();
-             if(!($user = $this->create([
+             if(!($user = self::create([
                 'name'     => $name,
                 'email'    => $email,
                 'password' => Hash::make($password),
