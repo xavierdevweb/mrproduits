@@ -40,7 +40,4 @@
             </form>
         </div>
     </div>
-
-
-    {{-- Notre formulaire ira ici ! --}}
 @endsection

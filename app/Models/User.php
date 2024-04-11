@@ -4,10 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Hash;
 
 
 class User extends Authenticatable
@@ -71,23 +71,28 @@ class User extends Authenticatable
         return strtolower($this->role->name) === 'admin';
     }
 
-    public static function register($name, $email, $password, $roleName, &$createdUser = null) : bool
+    public static function register($name, $email, $password, $roleName, &$createdUser = null): bool
     {
         try {
             $role = Role::query()->where('name', strtolower($roleName))->firstOrFail();
-             if(!($user = self::create([
+            
+            // Utilisation de la classe actuelle pour appeler la méthode create() de manière statique
+            $user = self::create([
                 'name'     => $name,
                 'email'    => $email,
                 'password' => Hash::make($password),
                 'role_id'  => $role->id
-            ]))) {
-               throw new \Exception("Erreur lors de la création de l'utilisateur. Veuillez réessayer.");
+            ]);
+    
+            if (!$user) {
+                throw new \Exception("Erreur lors de la création de l'utilisateur. Veuillez réessayer.");
             }
-
+    
             $createdUser = $user;
             return true;
         } catch (\Exception $e) {
             return false;
         }
     }
+    
 }
